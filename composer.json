@@ -3,6 +3,7 @@
     "type": "library",
     "license": "GPL-3.0-or-later",
     "description": "This is package to use Chainpoint API.",
+    "version": "0.0.1",
     "authors": [
         {
             "name": "Kenji Otsuka",
