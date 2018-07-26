@@ -38,21 +38,6 @@ class Chainpoint {
         'content' => json_encode(['hashes' => [$hash]])
       ]
     ];
-    //$payload = json_encode(['hashes' => [$hash]]);
-    //$ch = curl_init($urlBase . '/hashes');
-    //curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    //curl_setopt($ch, CURLINFO_HEADER_OUT, true);
-    //curl_setopt($ch, CURLOPT_POST, true);
-    //curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-    //curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-    //  'Content-Type: application/json',
-    //  'Content-Length: ' . strlen($payload)
-    //));
-    //$result = curl_exec($ch);
-    //var_dump($result);
-    //curl_close($ch);
-    //return json_decode($result);
-
 
     return json_decode(
       file_get_contents(
@@ -64,18 +49,28 @@ class Chainpoint {
 
   function getProof(string $hashIdNode) {
     if (empty($this)) $baseUrl = self::pickupServer();
-    else $baseUrl = $serverBaseUrl;
+    else $baseUrl = $this->serverBaseUrl;
 
+    return json_decode(file_get_contents($baseUrl . '/proofs/' . $hashIdNode), true);
   }
 
   function verify(string $proof) {
-    if (empty($this)) $baseUrl = self::pickupServer();
-    else $baseUrl = $serverBaseUrl;
+    if (empty($this)) $urlBase = self::pickupServer();
+    else $urlBase = $this->serverBaseUrl;
 
+    $options = [
+      'http' => [
+        'header' => "Content-Type: application/json\r\n",
+        'method' => 'POST',
+        'content' => json_encode(['proofs' => [$proof]])
+      ]
+    ];
+
+    return json_decode(
+      file_get_contents(
+        $urlBase . '/verify', false, stream_context_create($options)
+      ),
+      true
+    );
   }
 }
-
-$c = new Chainpoint();
-var_dump($c->submitData("test"));
-var_dump(Chainpoint::submitData("test"));
-//echo $c->pickupServer();
