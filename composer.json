@@ -1,0 +1,12 @@
+{
+    "name": "kenjiotsuka/chainpoint",
+    "type": "library",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Kenji Ohtsuka",
+            "email": "kok.fdcm@gmail.com"
+        }
+    ],
+    "require": {}
+}
