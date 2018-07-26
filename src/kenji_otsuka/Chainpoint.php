@@ -2,7 +2,7 @@
 
 namespace KenjiOtsuka;
 
-class Cainpoint {
+class Chainpoint {
   const LIST = [
     "https://a.chainpoint.org/nodes/random",
     "https://b.chainpoint.org/nodes/random",
@@ -10,7 +10,9 @@ class Cainpoint {
   ];
 
   function pickupServer() {
-
+    $index = rand(0, count(self::LIST) - 1);
+    $json = json_decode(file_get_contents(self::LIST[$index]), true);
+    return $json[rand(0, count($json) - 1)]['public_uri'];
   }
 
   function submit(string $hash) {
