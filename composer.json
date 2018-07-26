@@ -1,7 +1,8 @@
 {
     "name": "kenji-otsuka/chainpoint",
     "type": "library",
-    "license": "GPL-3.0",
+    "license": "GPL-3.0-or-later",
+    "description": "This is package to use Chainpoint API.",
     "authors": [
         {
             "name": "Kenji Otsuka",
