@@ -22,24 +22,44 @@ class Chainpoint {
   }
 
   function submitData($data) {
-
+    $hash = hash("sha256", $data);
+    if (empty($this)) return self::submit($hash);
+    else return $this->submit($hash);
   }
 
   function submit(string $hash) {
-    if (empty($this)) $baseUrl = self::pickupServer();
-    else $baseUrl = $serverBaseUrl;
+    if (empty($this)) $urlBase = self::pickupServer();
+    else $urlBase = $this->serverBaseUrl;
 
-    $data = ['hashes' => [$hash]];
-    $content = http_build_query($data);
     $options = [
       'http' => [
-        'header' => 'Content-type: application/json',
+        'header' => "Content-Type: application/json\r\n",
         'method' => 'POST',
-        'content' => $content
+        'content' => json_encode(['hashes' => [$hash]])
       ]
     ];
-    return json_decode(file_get_contents(
-      $urlBase + '/hashes', true, stream_context_create($options)));
+    //$payload = json_encode(['hashes' => [$hash]]);
+    //$ch = curl_init($urlBase . '/hashes');
+    //curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    //curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+    //curl_setopt($ch, CURLOPT_POST, true);
+    //curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+    //curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    //  'Content-Type: application/json',
+    //  'Content-Length: ' . strlen($payload)
+    //));
+    //$result = curl_exec($ch);
+    //var_dump($result);
+    //curl_close($ch);
+    //return json_decode($result);
+
+
+    return json_decode(
+      file_get_contents(
+        $urlBase . '/hashes', false, stream_context_create($options)
+      ),
+      true
+    );
   }
 
   function getProof(string $hashIdNode) {
@@ -56,5 +76,6 @@ class Chainpoint {
 }
 
 $c = new Chainpoint();
-$c->a();
-echo $c->pickupServer();
+var_dump($c->submitData("test"));
+var_dump(Chainpoint::submitData("test"));
+//echo $c->pickupServer();
