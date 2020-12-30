@@ -1,5 +1,7 @@
 # Chainpoint library in PHP
 
+This is not actively developed (2020-12-31).
+
 This is PHP package for request to Tierion Chainpoint.
 For Chainpoint, look at [Chainpoint Node HTTP API](https://github.com/chainpoint/chainpoint-node/wiki/Node-HTTP-API).
 
